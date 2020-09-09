@@ -1,0 +1,40 @@
+# Name: Emmanuel Dubuisson
+# Date: September 9, 2020
+# Title:" Search and download data from legacy database using GDC api method."
+# Source: bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/download_prepare.html#Examples
+
+        ############################################################################
+
+# Start of code
+
+# upload libraries
+library(data.table)
+library(TCGAbiolinks)
+library(DESeq2)
+
+query <- GDCquery(project = "TCGA-GBM",
+                           data.category = "Gene expression",
+                           data.type = "Gene expression quantification",
+                           platform = "Illumina HiSeq", 
+                           file.type  = "normalized_results",
+                           experimental.strategy = "RNA-Seq",
+                           barcode = c("TCGA-14-0736-02A-01R-2005-01", "TCGA-06-0211-02A-02R-2005-01"),
+                           legacy = TRUE)
+GDCdownload(query, method = "api", files.per.chunk = 10)
+data <- GDCprepare(query)
+
+# Gene expression aligned against hg19.
+data.table(as.data.frame(colData(data)), 
+              options = list(scrollX = TRUE, keys = TRUE, pageLength = 5), 
+              rownames = FALSE)
+
+# Only first 100 to make render faster
+data.table(assay(data)[1:100,], 
+              options = list(scrollX = TRUE, keys = TRUE, pageLength = 5), 
+              rownames = TRUE)
+
+
+# End of code
+
+         #############################################################################
+         
