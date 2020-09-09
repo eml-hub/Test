@@ -3,7 +3,7 @@
 # Title:" Search and download data from legacy database using GDC api method."
 # Source: bioconductor.org/packages/release/bioc/vignettes/TCGAbiolinks/inst/doc/download_prepare.html#Examples
 
-        ############################################################################
+                 #######################################################################
 
 # Start of code
 
@@ -12,6 +12,7 @@ library(data.table)
 library(TCGAbiolinks)
 library(DESeq2)
 
+# Query
 query <- GDCquery(project = "TCGA-GBM",
                            data.category = "Gene expression",
                            data.type = "Gene expression quantification",
